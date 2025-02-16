@@ -11,6 +11,15 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyApuC3FciZ0F10pXMILf2q3S3bp3oGZY_U" async defer></script>
+  <script>
+function openGoogleMaps(address) {
+    var formattedAddress = encodeURIComponent(address);
+    var googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=" + formattedAddress;
+    window.open(googleMapsUrl, "_blank");
+}
+</script>
+
 <style>
    .hero {
             min-height: 100vh;
@@ -427,10 +436,12 @@ include('head.php'); ?>
 background: linear-gradient(to bottom, rgb(193 161 161), rgb(189 4 20));                        transform: rotate(-10deg);
             z-index: -1;
         "></div>
+        
         <div class="hero-content">
             <h1>Save a Life: Donate Blood</h1>
             <p>Your donation can make a world of difference. Join our mission to ensure a stable and sufficient blood supply for those in need. Every drop counts in our fight to save lives.</p>
-            <a href="donate_blood.php" class="cta-button" style="">Donate Now</a>
+            <a href="donate_blood.php" class="cta-button
+            " style="">Donate Now</a>
         </div>
     </section>
 
@@ -629,31 +640,37 @@ background: linear-gradient(to bottom, rgb(193 161 161), rgb(189 4 20));        
         <h2>Blood Donor Names</h2>
 
         <div class="row">
-          <?php
-            include 'conn.php';
-            $sql= "select * from donor_details join blood where donor_details.donor_blood=blood.blood_id order by rand() limit 6";
-            $result=mysqli_query($conn,$sql);
-            if(mysqli_num_rows($result)>0)
-            {
-            while($row = mysqli_fetch_assoc($result)) {
-           ?>
-            <div class="col-lg-4 col-sm-6 portfolio-item" ><br>
-            <div class="card" style="width:300px">
-                <img class="card-img-top" src="image\blood_drop_logo.jpg" alt="Card image" style="width:100%;height:300px">
-                <div class="card-body">
-                  <h3 class="card-title"><?php echo $row['donor_name']; ?></h3>
-                  <p class="card-text">
-                    <b>Blood Group : </b> <b><?php echo $row['blood_group']; ?></b><br>
-                    <b>Mobile No. : </b> <?php echo $row['donor_number']; ?><br>
-                    <b>Gender : </b><?php echo $row['donor_gender']; ?><br>
-                    <b>Age : </b> <?php echo $row['donor_age']; ?><br>
-                    <b>Address : </b> <?php echo $row['donor_address']; ?><br>
-                  </p>
+    <?php
+    include 'conn.php';
+    $sql = "SELECT * FROM donor_details JOIN blood WHERE donor_details.donor_blood=blood.blood_id ORDER BY RAND() LIMIT 6";
+    $result = mysqli_query($conn, $sql);
 
+    if (mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+    ?>
+        <div class="col-lg-4 col-sm-6 portfolio-item"><br>
+            <div class="card" style="width:300px">
+                <img class="card-img-top" src="image/blood_drop_logo.jpg" alt="Card image" style="width:100%;height:300px">
+                <div class="card-body">
+                    <h3 class="card-title"><?php echo $row['donor_name']; ?></h3>
+                    <p class="card-text">
+                        <b>Blood Group : </b> <b><?php echo $row['blood_group']; ?></b><br>
+                        <b>Mobile No. : </b> <?php echo $row['donor_number']; ?><br>
+                        <b>Gender : </b><?php echo $row['donor_gender']; ?><br>
+                        <b>Age : </b> <?php echo $row['donor_age']; ?><br>
+                        <b>Location : </b> <?php echo $row['donor_address']; ?><br>
+                    </p>
+                    <!-- Google Maps Button -->
+                    <button class="btn btn-primary" onclick="openGoogleMaps('<?php echo $row['donor_address']; ?>')">View on Google Maps</button>
                 </div>
-              </div>
+            </div>
         </div>
-      <?php }} ?>
+    <?php
+        }
+    }
+    ?>
+</div>
+
 </div>
 <br>
         <!-- /.row -->
@@ -708,6 +725,39 @@ background: linear-gradient(to bottom, rgb(193 161 161), rgb(189 4 20));        
 
     </div>
   </div>
+
+<!-- Chatbot Toggle Button -->
+<div id="chatbot-button" 
+    onclick="toggleChatbot()" 
+    style="position: fixed; bottom: 20px; right: 20px; cursor: pointer; z-index: 10000;">
+    <img src="https://cdn-icons-png.flaticon.com/512/134/134914.png" 
+        alt="Chat" 
+        width="60" 
+        height="60"
+        style="border-radius: 50%; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+</div>
+
+<!-- Chatbot Iframe (Hidden Initially) -->
+<iframe 
+    id="chatbot-iframe" 
+    src="https://www.chatbase.co/chatbot-iframe/bc8cqpuPckfwz3BBF3qdD" 
+    frameborder="0"
+    style="position: fixed; bottom: 90px; right: 20px; width: 350px; height: 430px; z-index: 9999; display: none; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+</iframe>
+
+<!-- JavaScript Logic -->
+<script>
+    function toggleChatbot() {
+        var iframe = document.getElementById("chatbot-iframe");
+        if (iframe.style.display === "none") {
+            iframe.style.display = "block"; // Show chatbot
+        } else {
+            iframe.style.display = "none"; // Hide chatbot
+        }
+    }
+</script>
+
+
   <?php include('footer.php');?>
 </div>
 
