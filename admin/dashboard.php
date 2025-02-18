@@ -124,7 +124,7 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="panel panel-default">
+                        <div class="">
                             <div class="panel-body" style="background: linear-gradient(to bottom, #4099ff, #73b4ff);">
                                 <div class="stat-panel text-center">
                                     <div class="stat-panel-number h1"><?php echo $donorsCount ?></div>
@@ -138,7 +138,7 @@
                     </div>
 
                     <div class="col-md-4">
-                        <div class="panel panel-default">
+                        <div class="">
                             <div class="panel-body" style="background: linear-gradient(to bottom, #2ed8b6, #59e0c5);">
                                 <div class="stat-panel text-center">
                                     <div class="stat-panel-number h1"><?php echo $queriesCount ?></div>
@@ -151,7 +151,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <!-- <div class="col-md-4">
                         <div class="panel panel-default">
                             <div class="panel-body" style="background: linear-gradient(to bottom, #FFB64D, #ffcb80);">
                                 <div class="stat-panel text-center">
@@ -164,7 +164,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="row">
                     <div class="col-md-8">

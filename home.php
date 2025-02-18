@@ -571,9 +571,7 @@ background: linear-gradient(to bottom, rgb(193 161 161), rgb(189 4 20));        
     </section>
 
 
-<br>
-        <h1 style="text-align:center;font-size:45px;">Welcome to BloodBank & Donor Management System</h1>
-<br>
+<!-- 
         <div class="row">
             <div class="col-lg-4 mb-4">
                 <div class="card">
@@ -635,11 +633,10 @@ background: linear-gradient(to bottom, rgb(193 161 161), rgb(189 4 20));        
 
                         </div>
             </div>
-</div>
+</div> -->
+<h2 style="font-family: 'Arial', sans-serif; color: #e74c3c; text-align: center; margin-bottom: 30px; font-weight: bold;">Blood Donor Heroes</h2>
 
-        <h2>Blood Donor Names</h2>
-
-        <div class="row">
+<div class="row" style="display: flex; flex-wrap: wrap; justify-content: center;">
     <?php
     include 'conn.php';
     $sql = "SELECT * FROM donor_details JOIN blood WHERE donor_details.donor_blood=blood.blood_id ORDER BY RAND() LIMIT 6";
@@ -648,20 +645,23 @@ background: linear-gradient(to bottom, rgb(193 161 161), rgb(189 4 20));        
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
     ?>
-        <div class="col-lg-4 col-sm-6 portfolio-item"><br>
-            <div class="card" style="width:300px">
-                <img class="card-img-top" src="image/blood_drop_logo.jpg" alt="Card image" style="width:100%;height:300px">
-                <div class="card-body">
-                    <h3 class="card-title"><?php echo $row['donor_name']; ?></h3>
-                    <p class="card-text">
-                        <b>Blood Group : </b> <b><?php echo $row['blood_group']; ?></b><br>
-                        <b>Mobile No. : </b> <?php echo $row['donor_number']; ?><br>
-                        <b>Gender : </b><?php echo $row['donor_gender']; ?><br>
-                        <b>Age : </b> <?php echo $row['donor_age']; ?><br>
-                        <b>Location : </b> <?php echo $row['donor_address']; ?><br>
+        <div class="col-lg-4 col-sm-6 portfolio-item" style="padding: 15px;">
+            <div style="width: 100%; max-width: 350px; background-color: #fff; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; margin: 0 auto;">
+                <div style="position: relative; height: 200px; overflow: hidden;">
+                    <img src="image/blood_drop_logo.jpg" alt="Blood Donor" style="width: 100%; height: 100%; object-fit: cover;">
+                    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to bottom, rgba(231, 76, 60, 0.8), rgba(231, 76, 60, 0.4)); display: flex; align-items: center; justify-content: center;">
+                        <h3 style="color: #fff; font-size: 24px; text-align: center; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);"><?php echo $row['donor_name']; ?></h3>
+                    </div>
+                </div>
+                <div style="padding: 20px;">
+                    <p style="font-family: 'Arial', sans-serif; font-size: 16px; color: #333; margin-bottom: 15px;">
+                        <span style="display: inline-block; background-color: #e74c3c; color: #fff; padding: 5px 10px; border-radius: 20px; font-weight: bold; margin-bottom: 10px;">Blood Group: <?php echo $row['blood_group']; ?></span><br>
+                        <strong style="color: #e74c3c;">Mobile:</strong> <?php echo $row['donor_number']; ?><br>
+                        <strong style="color: #e74c3c;">Gender:</strong> <?php echo $row['donor_gender']; ?><br>
+                        <strong style="color: #e74c3c;">Age:</strong> <?php echo $row['donor_age']; ?><br>
+                        <strong style="color: #e74c3c;">Location:</strong> <?php echo $row['donor_address']; ?>
                     </p>
-                    <!-- Google Maps Button -->
-                    <button class="btn btn-primary" onclick="openGoogleMaps('<?php echo $row['donor_address']; ?>')">View on Google Maps</button>
+                    <button onclick="openGoogleMaps('<?php echo $row['donor_address']; ?>')" style="width: 100%; padding: 10px; background-color: #e74c3c; color: #fff; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; transition: background-color 0.3s ease;">View on Google Maps</button>
                 </div>
             </div>
         </div>
@@ -671,12 +671,18 @@ background: linear-gradient(to bottom, rgb(193 161 161), rgb(189 4 20));        
     ?>
 </div>
 
-</div>
+<script>
+function openGoogleMaps(address) {
+    var encodedAddress = encodeURIComponent(address);
+    window.open('https://www.google.com/maps/search/?api=1&query=' + encodedAddress, '_blank');
+}
+</script>
+
 <br>
         <!-- /.row -->
 
         <!-- Features Section -->
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-lg-6">
                 <h2>BLOOD GROUPS</h2>
                 <p>
@@ -696,13 +702,13 @@ background: linear-gradient(to bottom, rgb(193 161 161), rgb(189 4 20));        
             <div class="col-lg-6">
                 <img class="img-fluid rounded" src="image\blood_donationcover.jpeg" alt="" >
             </div>
-        </div>
+        </div> -->
         <!-- /.row -->
 
         <hr>
 
         <!-- Call to Action Section -->
-        <div class="row mb-4">
+        <!-- <div class="row mb-4">
             <div class="col-md-8">
             <h4>UNIVERSAL DONORS AND RECIPIENTS</h4>
             <p>
@@ -721,7 +727,7 @@ background: linear-gradient(to bottom, rgb(193 161 161), rgb(189 4 20));        
             <div class="col-md-4">
                 <a class="btn btn-lg btn-secondary btn-block" href="donate_blood.php" style="align:center; background-color:#7FB3D5;color:#273746 ">Become a Donor </a>
             </div>
-        </div>
+        </div> -->
 
     </div>
   </div>

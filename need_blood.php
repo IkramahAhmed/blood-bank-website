@@ -129,36 +129,48 @@
                         </div>
                     </form>
 
-                    <div class="row">
-                        <?php if(isset($_POST['search'])) {
-                            $bg=$_POST['blood'];
-                            $sql= "select * from donor_details join blood where donor_details.donor_blood=blood.blood_id AND donor_blood='{$bg}' order by rand() limit 5";
-                            $result=mysqli_query($conn,$sql) or die("query unsuccessful.");
-                            if(mysqli_num_rows($result)>0) {
-                                while($row = mysqli_fetch_assoc($result)) {
-                        ?>
-                        <div class="col-lg-4 col-sm-6 donor-card">
-                            <div class="card">
-                                <img class="card-img-top" src="image\blood_drop_logo.jpg" alt="Blood Donor" style="width:100%;height:200px;object-fit:cover;">
-                                <div class="card-body">
-                                    <h3 class="card-title"><?php echo $row['donor_name']; ?></h3>
-                                    <p class="card-text">
-                                        <b>Blood Group : </b> <b><?php echo $row['blood_group']; ?></b><br>
-                                        <b>Mobile No. : </b> <?php echo $row['donor_number']; ?><br>
-                                        <b>Gender : </b><?php echo $row['donor_gender']; ?><br>
-                                        <b>Age : </b> <?php echo $row['donor_age']; ?><br>
-                                        <b>Address : </b> <?php echo $row['donor_address']; ?><br>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <?php
-                                }
-                            } else {
-                                echo '<div class="col-12"><div class="alert alert-danger">No Donor Found For your search Blood group</div></div>';
-                            }
-                        } ?>
-                    </div>
+                    <div class="row" style="display: flex; flex-wrap: wrap; justify-content: center;">
+    <?php if(isset($_POST['search'])) {
+        $bg=$_POST['blood'];
+        $sql= "select * from donor_details join blood where donor_details.donor_blood=blood.blood_id AND donor_blood='{$bg}' order by rand() limit 5";
+        $result=mysqli_query($conn,$sql) or die("query unsuccessful.");
+        if(mysqli_num_rows($result)>0) {
+            while($row = mysqli_fetch_assoc($result)) {
+    ?>
+    <div class="col-lg-4 col-sm-6 donor-card" style="padding: 15px;">
+        <div style="width: 100%; max-width: 350px; background-color: #fff; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; margin: 0 auto;">
+            <div style="position: relative; height: 200px; overflow: hidden;">
+                <img src="image\blood_drop_logo.jpg" alt="Blood Donor" style="width: 100%; height: 100%; object-fit: cover;">
+                <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to bottom, rgba(231, 76, 60, 0.8), rgba(231, 76, 60, 0.4)); display: flex; align-items: center; justify-content: center;">
+                    <h3 style="color: #fff; font-size: 24px; text-align: center; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);"><?php echo $row['donor_name']; ?></h3>
+                </div>
+            </div>
+            <div style="padding: 20px;">
+                <p style="font-family: 'Arial', sans-serif; font-size: 16px; color: #333; margin-bottom: 15px;">
+                    <span style="display: inline-block; background-color: #e74c3c; color: #fff; padding: 5px 10px; border-radius: 20px; font-weight: bold; margin-bottom: 10px;">Blood Group: <?php echo $row['blood_group']; ?></span><br>
+                    <strong style="color: #e74c3c;">Mobile:</strong> <?php echo $row['donor_number']; ?><br>
+                    <strong style="color: #e74c3c;">Gender:</strong> <?php echo $row['donor_gender']; ?><br>
+                    <strong style="color: #e74c3c;">Age:</strong> <?php echo $row['donor_age']; ?><br>
+                    <strong style="color: #e74c3c;">Address:</strong> <?php echo $row['donor_address']; ?>
+                </p>
+                <button onclick="openGoogleMaps('<?php echo $row['donor_address']; ?>')" style="width: 100%; padding: 10px; background-color: #e74c3c; color: #fff; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; transition: background-color 0.3s ease;">View on Google Maps</button>
+            </div>
+        </div>
+    </div>
+    <?php
+            }
+        } else {
+            echo '<div class="col-12"><div class="alert alert-danger" style="text-align: center; padding: 20px; border-radius: 10px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;">No Donor Found For your search Blood group</div></div>';
+        }
+    } ?>
+</div>
+
+<script>
+function openGoogleMaps(address) {
+    var encodedAddress = encodeURIComponent(address);
+    window.open('https://www.google.com/maps/search/?api=1&query=' + encodedAddress, '_blank');
+}
+</script>
                 </div>
             </div>
         </div>
